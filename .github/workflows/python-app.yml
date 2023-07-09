@@ -37,8 +37,9 @@ jobs:
     - name: Build and push docker images
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: aryanshrana/demo-github-action
+        image: aryanshrana/polybot
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: latest, ${{ github.sha }}
     
