@@ -4,7 +4,7 @@ import os
 import requests
 from collections import Counter
 
-YOLO_URL = f'http://yolo5:8081'
+YOLO_URL = f'http://yolo5-service:8081'
 
 
 class Bot:
