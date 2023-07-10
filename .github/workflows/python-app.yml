@@ -42,5 +42,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: 1.1.1-${{ github.run_number }}
+    - name: Update deployment YAML
+      run: |
+        # Install yq
+        sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64 -O /usr/local/bin/yq
+        sudo chmod +x /usr/local/bin/yq
+    
+        # Update the image tag in the deployment YAML file
+        sed -i "s|image: aryanshrana/polybot:1.1.1|image: aryanshrana/polybot:${{ github.run_number }}|g" ./polybot-configs/dev/polybot-deployment.yml
+
 
     
