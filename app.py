@@ -31,7 +31,7 @@ class Bot:
 
         @self.bot.message_handler(commands=['start'])
         def send_welcome(message):
-            self.send_text('Welcome to detect.me. You can detect images and videos in this bot.\nThe supported extensions are .png, .jpg, .mp4')
+            self.send_text('Welcome to detect-me. You can detect images and videos in this bot.\nThe supported extensions are .png, .jpg, .mp4')
 
         self.bot.infinity_polling()
 
