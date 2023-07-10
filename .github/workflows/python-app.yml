@@ -60,4 +60,4 @@ jobs:
         ls -al ./polybot-configs/dev
 
         # Update the image tag in the deployment YAML file
-        sed -i "s|image: aryanshrana/polybot:1.1.1|image: aryanshrana/polybot:${{ github.run_number }}|g" ./polybot-configs/dev/polybot-deployment.yml
+        sed -i "s|image: aryanshrana/polybot:1.1.1|image: aryanshrana/polybot:${{ github.run_number }}|g" ./polybot-configs/dev/polybot-deployment.yaml
