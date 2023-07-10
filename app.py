@@ -3,8 +3,10 @@ from loguru import logger
 import os
 import requests
 from collections import Counter
+# import openai
+import ffmpeg
 
-YOLO_URL = f'http://yolo5:8081'
+YOLO_URL = f'http://yolo5-service:8081'
 
 
 class Bot:
@@ -21,10 +23,15 @@ class Bot:
             self.current_msg = message
             self.handle_message(message)
 
+    
     def start(self):
         """Start polling msgs from users, this function never returns"""
         logger.info(f'{self.__class__.__name__} is up and listening to new messages....')
         logger.info(f'Telegram Bot information\n\n{self.bot.get_me()}')
+
+        @self.bot.message_handler(commands=['start'])
+        def send_welcome(message):
+            self.send_text('Welcome to detect.me. You can detect images and videos in this bot.\nThe supported extensions are .png, .jpg, .mp4')
 
         self.bot.infinity_polling()
 
@@ -36,7 +43,11 @@ class Bot:
 
     def is_current_msg_photo(self):
         return self.current_msg.content_type == 'photo'
-
+    
+    def is_current_msg_video(self):
+        return self.current_msg.content_type == 'video'
+    
+# download photo from user
     def download_user_photo(self, quality=2):
         """
         Downloads the photos that sent to the Bot to `photos` directory (should be existed)
@@ -58,6 +69,29 @@ class Bot:
             photo.write(data)
 
         return file_info.file_path
+# download video from user
+    def download_user_video(self, quality=2):
+        """
+        Downloads the photos that sent to the Bot to `photos` directory (should be existed)
+        :param quality: integer representing the file quality. Allowed values are [0, 1, 2]
+        :return:
+        """
+        if not self.is_current_msg_video():
+            raise RuntimeError(
+                f'Message content of type \'video\' expected, but got {self.current_msg.content_type}')
+
+        file_info = self.bot.get_file(self.current_msg.video.file_id)
+        data = self.bot.download_file(file_info.file_path)
+        folder_name = file_info.file_path.split('/')[0]
+
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        with open(file_info.file_path, 'wb') as photo:
+            photo.write(data)
+
+        return file_info.file_path
+    
 
     def handle_message(self, message):
         """Bot Main message handler"""
@@ -73,11 +107,40 @@ class QuoteBot(Bot):
             self.send_text_with_quote(message.text, message_id=message.message_id)
 
 
+
+# class ChatGPTBot(Bot):
+#     def handle_message(self, message):
+#         logger.info(f'Incoming message: {message}')
+
+#         # Generate a response
+#         completion = openai.ChatCompletion.create(
+#             model="gpt-3.5-turbo",
+#             messages=[{"role": "user", "content": message.text}],
+#             max_tokens=1024,
+#             n=1,
+#             stop=None,
+#             temperature=0.7, )
+
+#         response = completion.choices[0].message.content
+#         self.send_text(response)
+
 class ObjectDetectionBot(Bot):
     def handle_message(self, message):
         logger.info(f'Incoming message: {message}')
 
-        if self.is_current_msg_photo():
+        if self.is_current_msg_video():
+            video_path = self.download_user_video()
+
+            if os.path.exists('frames'):
+                os.rmdir('frames')
+
+            os.mkdir('frames')
+
+            output_file = 'frames/output_%04d.jpg'
+            framerate = '1'
+            ffmpeg.input(video_path).output(output_file, r=framerate).run()
+
+        elif self.is_current_msg_photo():
             photo_path = self.download_user_photo()
 
             # Send the photo to the YOLO service for object detection
@@ -97,11 +160,19 @@ class ObjectDetectionBot(Bot):
 
                 self.send_text(summary)
 
+                self.send_thank_you_button()
+
             else:
                 self.send_text('Failed to perform object detection. Please try again later.')
 
         else:
-            self.send_text('Please send a photo for object detection.')
+            self.send_text('Please send a photo or video for object detection.')
+
+    def send_thank_you_button(self):
+        markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
+        itembtn = telebot.types.KeyboardButton('Thank You')
+        markup.add(itembtn)
+        self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect.me!', reply_markup=markup)
 
 
 if __name__ == '__main__':
@@ -111,4 +182,4 @@ if __name__ == '__main__':
     print(_token)
     my_bot = ObjectDetectionBot(_token)
     my_bot.start()
-
+    

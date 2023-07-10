@@ -46,6 +46,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.telegramToken
 nosetests.xml
 coverage.xml
 *,cover
@@ -77,6 +78,7 @@ target/
 
 # pyenv
 .python-version
+.venv
 
 # celery beat schedule file
 celerybeat-schedule
@@ -87,6 +89,7 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+.venv/
 
 # Spyder project settings
 .spyderproject
