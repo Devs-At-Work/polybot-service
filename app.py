@@ -170,9 +170,9 @@ class ObjectDetectionBot(Bot):
 
     def send_thank_you_button(self):
         markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
-        itembtn = telebot.types.KeyboardButton('Thank You')
+        itembtn = telebot.types.KeyboardButton('Thank You 👀',resize_keyboard=True)
         markup.add(itembtn)
-        self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect.me!', reply_markup=markup)
+        self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect-me!', reply_markup=markup)
 
 
 if __name__ == '__main__':
