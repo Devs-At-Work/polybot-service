@@ -54,9 +54,10 @@ jobs:
         # Install yq
         sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64 -O /usr/local/bin/yq
         sudo chmod +x /usr/local/bin/yq
-    
+
+        # Print current directory and list files
+        pwd
+        ls -al ./polybot-configs/dev
+
         # Update the image tag in the deployment YAML file
         sed -i "s|image: aryanshrana/polybot:1.1.1|image: aryanshrana/polybot:${{ github.run_number }}|g" ./polybot-configs/dev/polybot-deployment.yml
-
-
-    
