@@ -64,7 +64,7 @@ jobs:
         yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' dev/polybot-deployment.yaml
 
         # Commit and push changes
-        cd ../../../polybot-configs/dev/polybot-deployment.yaml
+        cd ../../../../polybot-configs/dev/polybot-deployment.yaml
         git config user.name "Aryansh"
         git config user.email "500093038@stu.upes.ac.in"
         git add .
