@@ -54,32 +54,29 @@ jobs:
         # git clone https://github.com/Devs-At-Work/polybot-configs.git
 
     - name: Update deployment YAML and commit changes
-      env:
-        TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
       run: |
-        git config --global user.name "Aryansh"
-        git config --global user.email "500093038@stu.upes.ac.in"
-        git clone https://github.com/Devs-At-Work/polybot-configs.git
-        cd ./polybot-configs
+        #git config --global user.name "Aryansh"
+        #git config --global user.email "500093038@stu.upes.ac.in"
+        #git clone https://github.com/Devs-At-Work/polybot-configs.git
+        #cd ./polybot-configs
         # cd polybot-configs
         # Install yq
         sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64 -O /usr/local/bin/yq
         sudo chmod +x /usr/local/bin/yq
 
         # Update the image tag in the deployment YAML file
-        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' dev/polybot-deployment.yaml
-        git add .
-        git commit -m "Update image tag in polybot-deployment.yaml"
-        git push origin main
+        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' ./polybot-configs/dev/polybot-deployment.yaml
+        #git add .
+        #git commit -m "Update image tag in polybot-deployment.yaml"
+        #git push origin main
 
         # Commit and push changes
-    # - name: Commit and push changes
-      
-      #run: |
-        #cd ./polybot-configs
-        #git config user.name "Aryansh"
-        #git config user.email "500093038@stu.upes.ac.in"
-        #git add ./dev/polybot-deployment.yaml
-        #git commit -m "Update image tag in polybot-deployment.yaml"
-        #git push
+    - name: Commit and push changes
+      run: |
+       cd ./polybot-configs
+       git config user.name "Aryansh"
+       git config user.email "500093038@stu.upes.ac.in"
+       git add ./dev/polybot-deployment.yaml
+       git commit -m "Update image tag in polybot-deployment.yaml"
+       git push
 
