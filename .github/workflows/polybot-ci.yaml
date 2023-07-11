@@ -56,8 +56,8 @@ jobs:
         sudo chmod +x /usr/local/bin/yq
 
         # Print current directory and list files
-        pwd
-        ls -al ../../../polybot-configs/dev
+        # pwd
+        # ls -al ../../../polybot-configs/dev
 
         # Update the image tag in the deployment YAML file
         sed -i "s%IMG_URL%docker.io/aryanshrana/polybot:1.1.1%g" ../../../polybot-configs/dev/polybot-deployment.yaml
