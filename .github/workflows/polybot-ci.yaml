@@ -87,7 +87,7 @@ jobs:
     - name: Commit and push changes
       run: |
         git config user.name "GitHub Actions Bot"
-        git config user.email "<>"
+        git config user.email "500093038@stu.upes.ac.in"
         cd ./polybot-configs
                 
         git add .
