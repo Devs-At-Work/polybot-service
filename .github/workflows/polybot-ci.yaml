@@ -42,12 +42,12 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: 1.1.1
-    - name: Checkout polybot-configs
-      uses: actions/checkout@v3
-      with:
-        repository: Devs-At-Work/polybot-configs
-        ref: main
-        path: ./polybot-configs
+#     - name: Checkout polybot-configs
+#       uses: actions/checkout@v3
+#       with:
+#         repository: Devs-At-Work/polybot-configs
+#         ref: main
+#         path: ./polybot-configs
 
     - name: Update deployment YAML
       run: |
@@ -60,4 +60,4 @@ jobs:
         ls -al ./polybot-configs/dev
 
         # Update the image tag in the deployment YAML file
-        sed -i "s%IMG_URL%docker.io/aryanshrana/polybot:1.1.1%g" ./dev/polybot-deployment.yaml
+        sed -i "s%IMG_URL%docker.io/aryanshrana/polybot:1.1.1%g" ../../../polybot-configs/dev/polybot-deployment.yaml
