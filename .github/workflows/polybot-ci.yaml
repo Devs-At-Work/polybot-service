@@ -55,16 +55,16 @@ jobs:
 
     - name: Update deployment YAML and commit changes
       run: |
-        cd polybot-configs
+        # cd polybot-configs
         # Install yq
         sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64 -O /usr/local/bin/yq
         sudo chmod +x /usr/local/bin/yq
 
         # Update the image tag in the deployment YAML file
-        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' dev/polybot-deployment.yaml
+        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' /github/workspace/polybot-configs/dev/polybot-deployment.yaml
 
         # Commit and push changes
-        cd /github/workspace/polybot-configs/dev/polybot-deployment.yaml
+        cd /github/workspace/polybot-configs
 
         # Commit and push changes
         git config user.name "Aryansh"
