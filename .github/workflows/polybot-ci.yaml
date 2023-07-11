@@ -55,7 +55,7 @@ jobs:
 
     - name: Update deployment YAML and commit changes
       run: |
-        git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/Devs-At-Work/polybot-configs.git
+        git clone https://.:${{ secrets.TARGET_REPO_TOKEN }}@github.com/Devs-At-Work/polybot-configs.git
         rm everything but the .git directory
         # Install yq
         sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64 -O /usr/local/bin/yq
