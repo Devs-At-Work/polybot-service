@@ -64,12 +64,12 @@ jobs:
         yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' ./polybot-configs/dev/polybot-deployment.yaml
 
         # Commit and push changes
-        # cd /github/workspace/polybot-configs
-
-        # Commit and push changes
-        # git config user.name "Aryansh"
-        # git config user.email "500093038@stu.upes.ac.in"
-        # git add .
-        # git commit -m "Update image tag in polybot-deployment.yaml"
-        # git push
+    - name: Commit and push changes
+      run: |
+        cd ./polybot-configs
+        git config user.name "Aryansh"
+        git config user.email "500093038@stu.upes.ac.in"
+        git add ./dev/polybot-deployment.yaml
+        git commit -m "Update image tag in polybot-deployment.yaml"
+        git push
 
