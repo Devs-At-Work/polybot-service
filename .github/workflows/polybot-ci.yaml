@@ -64,8 +64,8 @@ jobs:
 
         # Commit and push changes
         cd "${{ github.workspace }}/polybot-configs"
-        git config user.name "Aryansh"
-        git config user.email "500093038@stu.upes.ac.in"
+        git config user.name "Aryanshrana"
+        git config user.email "ranaaryansh12@gmail.com"
         git add .
         git commit -m "Update image tag in polybot-deployment.yaml"
         git push
