@@ -60,10 +60,10 @@ jobs:
         sudo chmod +x /usr/local/bin/yq
 
         # Update the image tag in the deployment YAML file
-        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' "${{ github.workspace }}/polybot-configs/dev/polybot-deployment.yaml"
+        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' Devs-At-Work/polybot-configs/dev/polybot-deployment.yaml
 
         # Commit and push changes
-        cd "${{ github.workspace }}/polybot-configs"
+        cd Devs-At-Work/polybot-configs
         git config user.name "Aryanshrana"
         git config user.email "ranaaryansh12@gmail.com"
         git add .
