@@ -69,7 +69,7 @@ jobs:
         git push
 
 
-    # # - name: clone
+    # # - name: clone polybot-configs
     #   # run: |
     #     # git clone https://github.com/Devs-At-Work/polybot-configs.git
 
