@@ -42,16 +42,16 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: 1.1.1-${{github.run_number}}
-#     - name: Checkout polybot-configs
-#       uses: actions/checkout@v3
-#       with:
-#         repository: Devs-At-Work/polybot-configs
-#         ref: main
-#         path: ./polybot-configs
+    - name: Checkout polybot-configs
+      uses: actions/checkout@v3
+      with:
+         repository: Devs-At-Work/polybot-configs
+         ref: main
+         path: ./polybot-configs
 
-    - name: clone
-      run: |
-        git clone https://github.com/Devs-At-Work/polybot-configs.git
+    # - name: clone
+      # run: |
+        # git clone https://github.com/Devs-At-Work/polybot-configs.git
 
     - name: Update deployment YAML and commit changes
       run: |
@@ -61,15 +61,15 @@ jobs:
         sudo chmod +x /usr/local/bin/yq
 
         # Update the image tag in the deployment YAML file
-        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' /github/workspace/polybot-configs/dev/polybot-deployment.yaml
+        yq e -i '.spec.template.spec.containers[0].image = "aryanshrana/polybot:1.1.1-${{ github.run_number }}"' dev/polybot-deployment.yaml
 
         # Commit and push changes
-        cd /github/workspace/polybot-configs
+        # cd /github/workspace/polybot-configs
 
         # Commit and push changes
-        git config user.name "Aryansh"
-        git config user.email "500093038@stu.upes.ac.in"
-        git add .
-        git commit -m "Update image tag in polybot-deployment.yaml"
-        git push
+        # git config user.name "Aryansh"
+        # git config user.email "500093038@stu.upes.ac.in"
+        # git add .
+        # git commit -m "Update image tag in polybot-deployment.yaml"
+        # git push
 
