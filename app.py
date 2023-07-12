@@ -160,7 +160,9 @@ class ObjectDetectionBot(Bot):
 
                 self.send_text(summary)
 
-                self.send_thank_you_button()
+                self.send_text('Thank you for using detect-me👀!')
+
+                # self.send_thank_you_button()
 
             else:
                 self.send_text('Failed to perform object detection. Please try again later.')
@@ -168,11 +170,11 @@ class ObjectDetectionBot(Bot):
         else:
             self.send_text('Please send a photo for object detection.')
 
-    def send_thank_you_button(self):
-        markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
-        itembtn = telebot.types.KeyboardButton('Thank You 👀')
-        markup.add(itembtn)
-        self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect-me!', reply_markup=markup)
+    # def send_thank_you_button(self):
+    #     markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
+    #     itembtn = telebot.types.KeyboardButton('Thank You 👀')
+    #     markup.add(itembtn)
+    #     self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect-me!', reply_markup=markup)
 
 
 if __name__ == '__main__':
