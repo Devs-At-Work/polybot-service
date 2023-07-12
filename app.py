@@ -31,7 +31,7 @@ class Bot:
 
         @self.bot.message_handler(commands=['start'])
         def send_welcome(message):
-            self.send_text('Welcome to detect-me. You can detect images and videos in this bot.\nThe supported extensions are .png, .jpg, .mp4')
+            self.send_text('Welcome to detect-me. You can detect images in this bot.\nThe supported extensions are .png, .jpg and .jpeg')
 
         self.bot.infinity_polling()
 
@@ -166,11 +166,11 @@ class ObjectDetectionBot(Bot):
                 self.send_text('Failed to perform object detection. Please try again later.')
 
         else:
-            self.send_text('Please send a photo or video for object detection.')
+            self.send_text('Please send a photo for object detection.')
 
     def send_thank_you_button(self):
         markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
-        itembtn = telebot.types.KeyboardButton('Thank You 👀',resize_keyboard=True)
+        itembtn = telebot.types.KeyboardButton('Thank You 👀')
         markup.add(itembtn)
         self.bot.send_message(self.current_msg.chat.id, 'Thank you for using detect-me!', reply_markup=markup)
 
